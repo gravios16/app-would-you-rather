@@ -6,8 +6,9 @@ import { handleInitialData } from '../actions/shared'
 
 import LoadingBar from 'react-redux-loading'
 import QuestionList from './QuestionList'
-//import NewQuestion from './NewQuestion'
-//import LeaderUserList from './LeaderUserList'
+import NewQuestion from './NewQuestion'
+import LeaderUserList from './LeaderUserList'
+import LogIn from './LogIn'
 import Nav from './Nav'
 
 import '../App.css';
@@ -28,7 +29,9 @@ class App extends Component {
             {this.props.loading === false &&
               <div>
                 <Route path='/' exact component={QuestionList} />
-                {/*<Route path='/new' exact component={NewQuestion} />*/}
+                <Route path='/new' exact component={NewQuestion} />
+                <Route path='/leaderboard' exact component={LeaderUserList} />
+                <Route path='/login' exact component={LogIn} />
               </div>}
           </div>
         </Fragment>

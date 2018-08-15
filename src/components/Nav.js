@@ -4,13 +4,13 @@ import { NavLink } from 'react-router-dom'
 export default function Nav () {
   return (
 
-    <nav className='navbar' role='navigation' aria-label="main navigation">
+    <div className='navbar' role='navigation' aria-label="main navigation">
       <div className="navbar-brand">
         <NavLink to='/' exact className='navbar-item'>
             Home
         </NavLink>
 
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -29,7 +29,7 @@ export default function Nav () {
 
       <div className="navbar-menu navbar-end">
         <span className='navbar-item'>
-          Hello, Massimo!&nbsp;<img height="10" src="http://localhost:3000/img/avatar.png" />
+          Hello, Massimo!&nbsp;<img height="10" src="http://localhost:3000/img/avatar.png" alt="User image"/>
         </span>
 
         <NavLink to='/leaderboard' exact className='navbar-item'>
@@ -37,6 +37,6 @@ export default function Nav () {
         </NavLink>
       </div>
 
-    </nav>
+    </div>
   )
 }
