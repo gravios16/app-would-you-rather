@@ -1,6 +1,6 @@
 # Would You Rather Project
 
-  Description........
+  Application to ask people what do they rather between two options.
 
 ## Installation:
 

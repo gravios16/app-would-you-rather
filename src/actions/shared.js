@@ -1,4 +1,4 @@
-import { getInitialData } from '../utils/api'
+import { getInitialData, saveQuestionAnswer } from '../utils/api'
 
 import { receiveUsers } from './users'
 import { receiveQuestions } from './questions'
@@ -15,5 +15,16 @@ export function handleInitialData () {
         dispatch(receiveQuestions(questions))
         dispatch(hideLoading())
       })
+  }
+}
+
+export function handleAnswerQuestion (questionAnswer) {
+  return dispatch => {
+
+    dispatch(showLoading())
+
+    return saveQuestionAnswer(questionAnswer)
+    .then(() => dispatch(hideLoading()))
+    .then(() => dispatch(handleInitialData()))
   }
 }

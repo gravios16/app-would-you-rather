@@ -8,6 +8,7 @@ import LoadingBar from 'react-redux-loading'
 import QuestionList from './QuestionList'
 import NewQuestion from './NewQuestion'
 import LeaderUserList from './LeaderUserList'
+import QuestionPage from './QuestionPage'
 import LogIn from './LogIn'
 import NotFound404 from './NotFound404'
 import PrivateRoute from './elements/PrivateRoute'
@@ -32,6 +33,7 @@ class App extends Component {
                 <PrivateRoute path='/' exact component={QuestionList} />
                 <PrivateRoute path='/new' exact component={NewQuestion} />
                 <PrivateRoute path='/leaderboard' exact component={LeaderUserList} />
+                <PrivateRoute path='/question/:id' exact component={QuestionPage} />
                 <Route path='/login' exact component={LogIn} />
                 <Route component={NotFound404} />
               </Switch>

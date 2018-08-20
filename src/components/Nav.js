@@ -46,7 +46,7 @@ class Nav extends Component {
 
         { !(authedUser == null) && (<div className="navbar-menu navbar-end">
           <span className='navbar-item'>
-            Hello, {authedUser.name}!&nbsp;<img height="10" src={authedUser.avatarURL} alt="User image"/>
+            Hi, {authedUser.name}!&nbsp;<img height="10" src={authedUser.avatarURL} alt="User image"/>
           </span>
 
           <LogOutButton/>
