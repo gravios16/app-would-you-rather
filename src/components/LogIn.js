@@ -17,7 +17,7 @@ class LogIn extends Component {
     }))
   }
 
-  login = (e) => {
+  logIn = (e) => {
     e.preventDefault()
 
     const { selectedUser } = this.state
@@ -29,11 +29,12 @@ class LogIn extends Component {
   }
 
   render() {
+    const { from } = this.props.location.state || { from: { pathname: "/" } }
     const { users, authedUser }  = this.props
     const { selectedUser, toHome } = this.state
 
     if ( !(authedUser === null) ) {
-      return <Redirect to='/'/>
+      return <Redirect to={from} />
     }
 
     return (
@@ -74,7 +75,7 @@ class LogIn extends Component {
 
             </div>
             <footer className="card-footer">
-              <a href="#" className="card-footer-item" onClick={this.login}>Sign In</a>
+              <a href="#" className="card-footer-item" onClick={this.logIn}>Sign In</a>
             </footer>
           </div>
 

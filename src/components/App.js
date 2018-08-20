@@ -10,6 +10,7 @@ import NewQuestion from './NewQuestion'
 import LeaderUserList from './LeaderUserList'
 import LogIn from './LogIn'
 import NotFound404 from './NotFound404'
+import PrivateRoute from './elements/PrivateRoute'
 import Nav from './Nav'
 
 import '../App.css';
@@ -17,11 +18,6 @@ import '../App.css';
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(handleInitialData())
-  }
-
-  middleware (component) {
-    const { authedUser } = this.props
-    return authedUser === null ? LogIn : component
   }
 
   render() {
@@ -33,9 +29,9 @@ class App extends Component {
           {this.props.loading === false && (
             <Fragment>
               <Switch>
-                <Route path='/' exact component={this.middleware(QuestionList)} />
-                <Route path='/new' exact component={this.middleware(NewQuestion)} />
-                <Route path='/leaderboard' exact component={this.middleware(LeaderUserList)} />
+                <PrivateRoute path='/' exact component={QuestionList} />
+                <PrivateRoute path='/new' exact component={NewQuestion} />
+                <PrivateRoute path='/leaderboard' exact component={LeaderUserList} />
                 <Route path='/login' exact component={LogIn} />
                 <Route component={NotFound404} />
               </Switch>

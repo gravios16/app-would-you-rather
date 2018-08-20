@@ -35,19 +35,22 @@ class QuestionList extends Component {
   }
 
   render() {
-    //console.log(this.props,"props")
-
     const { tabs } = this.state
     const { questionsIds, users, authedUser } = this.props
 
-    const activeTab = tabs.filter((tab) => (tab.active))[0]
-    const userInfo = users[authedUser]
+    const activeTab = tabs.filter((tab) => (tab.active))[0] || null
 
-    console.log(userInfo, "zzzzzzzzzzzzzz");
+    let filteredQuestions = []
 
-    const filteredQuestions = questionsIds.filter((q) => {
+    if (activeTab !== null) {
+      let answered = activeTab["title"] === 'Answered'
+      let answeredQuestionsIds = Object.keys(authedUser.answers)
 
-    })
+      filteredQuestions = questionsIds.filter((qId) => {
+        let include =  answeredQuestionsIds.includes(qId)
+        return answered === true ?  include : !include
+      })
+    }
 
     return (
       <section className="section">
@@ -55,7 +58,7 @@ class QuestionList extends Component {
 
           <TabHeader tabs={tabs} onToggleTab={this.toggleTab}/>
           <ul className='dashboard-list'>
-            {questionsIds.map((id) => (
+            {filteredQuestions.map((id) => (
               <li key={id}>
                 <Question id={id} />
                 <br/>

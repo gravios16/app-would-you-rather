@@ -1,12 +1,24 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
+import { setAuthedUser } from '../actions/authedUser'
 
 class Nav extends Component {
+
+  logOut = (history) => {
+    const { dispatch, users}  = this.props
+    history.push("/")
+    dispatch(setAuthedUser(null))
+  }
 
   render () {
 
     const { authedUser } = this.props
+    const LogOutButton = withRouter( ({ history }) => (
+      <a onClick={() => this.logOut(history)} className='navbar-item'>
+        Log out
+      </a>
+    ))
 
     return (
       <div className='navbar' role='navigation' aria-label="main navigation">
@@ -34,12 +46,10 @@ class Nav extends Component {
 
         { !(authedUser == null) && (<div className="navbar-menu navbar-end">
           <span className='navbar-item'>
-            Hello, {authedUser.name}!&nbsp;<img height="10" src="http://localhost:3000/img/avatar.png" alt="User image"/>
+            Hello, {authedUser.name}!&nbsp;<img height="10" src={authedUser.avatarURL} alt="User image"/>
           </span>
 
-          <NavLink to='/leaderboard' exact className='navbar-item'>
-            Log out
-          </NavLink>
+          <LogOutButton/>
         </div>)}
 
       </div>
