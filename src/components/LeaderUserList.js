@@ -24,10 +24,8 @@ class LeaderUserList extends Component {
   }
 }
 
-function mapStateToProps (props) {
-  const {users} = props
+function mapStateToProps ({users}) {
   return {
-    ...props,
     users: Object.keys(users)
       .sort((a,b) => calcScore(users[b]) - calcScore(users[a]))
   }

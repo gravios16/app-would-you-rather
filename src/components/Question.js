@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
-import { Link, withRouter, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 class Question extends Component {
 
@@ -41,7 +40,7 @@ class Question extends Component {
   }
 }
 
-function mapStateToProps ({users ,questions}, { id }) {
+function mapStateToProps ({users, questions}, { id }) {
   return {
     question: {
       ...questions[id],
@@ -50,4 +49,4 @@ function mapStateToProps ({users ,questions}, { id }) {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(Question))
+export default connect(mapStateToProps)(Question)

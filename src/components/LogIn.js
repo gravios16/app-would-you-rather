@@ -21,10 +21,10 @@ class LogIn extends Component {
     e.preventDefault()
 
     const { selectedUser } = this.state
-    const { dispatch, users}  = this.props
+    const { dispatch }  = this.props
 
     if (selectedUser !== '') {
-      dispatch(setAuthedUser(users[selectedUser]))
+      dispatch(setAuthedUser(selectedUser))
     }
   }
 
@@ -85,8 +85,7 @@ class LogIn extends Component {
   }
 }
 
-function mapStateToProps (props) {
-  const { users, authedUser } = props
+function mapStateToProps ({ users, authedUser }) {
   return {
     users,
     authedUser

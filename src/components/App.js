@@ -31,11 +31,12 @@ class App extends Component {
             <Fragment>
               <Switch>
                 <PrivateRoute path='/' exact component={QuestionList} />
-                <PrivateRoute path='/new' exact component={NewQuestion} />
+                <PrivateRoute path='/add' exact component={NewQuestion} />
                 <PrivateRoute path='/leaderboard' exact component={LeaderUserList} />
                 <PrivateRoute path='/question/:id' exact component={QuestionPage} />
                 <Route path='/login' exact component={LogIn} />
-                <Route component={NotFound404} />
+                <PrivateRoute path='/404' exact component={NotFound404} />
+                <PrivateRoute component={NotFound404} />
               </Switch>
             </Fragment>
           )}
@@ -45,10 +46,9 @@ class App extends Component {
   }
 }
 
-function mapStateToProps ({ questions, authedUser }) {
+function mapStateToProps ({ questions }) {
   return {
-    loading: !(Object.keys(questions).length > 0),
-    authedUser
+    loading: !(Object.keys(questions).length > 0)
   }
 }
 

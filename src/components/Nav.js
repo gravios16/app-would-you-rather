@@ -35,7 +35,7 @@ class Nav extends Component {
         </div>
 
         <div className="navbar-menu navbar-start">
-          <NavLink to='/new' exact className='navbar-item'>
+          <NavLink to='/add' exact className='navbar-item'>
             New Question
           </NavLink>
 
@@ -57,10 +57,9 @@ class Nav extends Component {
   }
 }
 
-function mapStateToProps (props) {
-  const { authedUser } = props
+function mapStateToProps ({ authedUser, users }) {
   return {
-    authedUser
+    authedUser: users[authedUser]
   }
 }
 export default connect(mapStateToProps)(Nav)

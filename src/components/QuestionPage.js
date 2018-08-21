@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import { handleAnswerQuestion } from '../actions/shared'
+import { handleAnswerQuestion } from '../actions/questions'
 
-import { Link, withRouter, NavLink } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 class QuestionPage extends Component {
   state = {
@@ -11,15 +11,8 @@ class QuestionPage extends Component {
 
   answer = (e) => {
     e.preventDefault()
-    const { questions, authedUser, users, id } = this.props
-    let questionAnswer = {
-      authedUser: authedUser.id,
-      qid: id,
-      answer: this.state.selectedOption
-    }
-
-    this.props.dispatch(handleAnswerQuestion(questionAnswer))
-    //this.props.dispatch(setAuthedUser(users[authedUser.id]))
+    const { authedUser, question } = this.props
+    this.props.dispatch(handleAnswerQuestion(authedUser, question.id, this.state.selectedOption))
   }
 
   handleOptionChange = (e) => {
@@ -30,6 +23,12 @@ class QuestionPage extends Component {
   }
 
   render() {
+    const { redirect404 } = this.props
+
+    if (redirect404) {
+      return <Redirect to='/404'/>
+    }
+
     const { question } = this.props
 
     return (
@@ -117,21 +116,36 @@ class QuestionPage extends Component {
 
 function mapStateToProps ({authedUser, questions, users}, props) {
   const { id } = props.match.params
-  const totalVotes = questions[id].optionOne.votes.length + questions[id].optionTwo.votes.length
-  const question = {
-    ...questions[id],
-    isAnswered: Object.keys(authedUser.answers).includes(id),
-    authorInfo: users[questions[id].author],
-    yourVoteA: questions[id].optionOne.votes.includes(authedUser.id),
-    yourVoteB: questions[id].optionTwo.votes.includes(authedUser.id),
-    aPercent: (questions[id].optionOne.votes.length/totalVotes)*100,
-    bPercent: (questions[id].optionTwo.votes.length/totalVotes)*100,
-    totalVotes
+
+  if (!questions[id]) {
+    return {redirect404: true}
   }
 
-  return {
-    question
+  const authedUserData = users[authedUser];
+
+  const totalVotes = questions[id].optionOne.votes.length + questions[id].optionTwo.votes.length
+
+  const isAnswered = Object.keys(authedUserData.answers).includes(id)
+
+  let question = {
+    isAnswered,
+    ...questions[id],
+    authorInfo: users[questions[id].author]
   }
+
+  if (isAnswered) {
+    redirect404: false,
+    question = {
+      ...question,
+      yourVoteA: questions[id].optionOne.votes.includes(authedUserData.id),
+      yourVoteB: questions[id].optionTwo.votes.includes(authedUserData.id),
+      aPercent: ((questions[id].optionOne.votes.length/totalVotes)*100).toFixed(2),
+      bPercent: ((questions[id].optionTwo.votes.length/totalVotes)*100).toFixed(2),
+      totalVotes
+    }
+  }
+
+  return {question, authedUser}
 }
 
-export default withRouter(connect(mapStateToProps)(QuestionPage))
+export default connect(mapStateToProps)(QuestionPage)

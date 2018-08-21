@@ -71,12 +71,11 @@ class QuestionList extends Component {
   }
 }
 
-function mapStateToProps (props) {
-
-  const {questions} = props
-
+function mapStateToProps ({questions, users, authedUser}) {
   return {
-    ...props,
+    questions,
+    users,
+    authedUser: users[authedUser],
     questionsIds: Object.keys(questions)
       .sort((a,b) => questions[b].timestamp - questions[a].timestamp)
   }
